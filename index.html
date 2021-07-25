@@ -39,7 +39,7 @@
     </style>
 </head>
 <body>
-    
+
     <div class="container">
         <h2>SIGNUP FORM</h2>
         <form role="form" onsubmit="signUp(event);">
@@ -62,50 +62,61 @@
 
         <h2>MY INFO</h2>
         <div id="output">
-            <!-- DISPLAY USERS DATA -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email Address</th>
+                        <th>Password</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- DISPLAY USERS DATA -->
+                </tbody>
+            </table>
         </div>
     </div>
 
     <script type="text/javascript">
         const signUp = e => {
-            let formData = {
-                fname: document.getElementById('fname').value,
-                lname: document.getElementById('lname').value,
-                email: document.getElementById('email').value,
-                pwd: document.getElementById('pwd').value
+            let formData = JSON.parse(localStorage.getItem('formData')) || [];
+            let exist = formData.length && 
+            JSON.parse(localStorage.getItem('formData')).some(data => data.fname.toLowerCase() == document.getElementById('fname').value.toLowerCase() && data.lname.toLowerCase() == document.getElementById('lname').value.toLowerCase());
+            if(!exist){
+                formData.push({
+                    fname: document.getElementById('fname').value,
+                    lname: document.getElementById('lname').value,
+                    email: document.getElementById('email').value,
+                    pwd: document.getElementById('pwd').value
+                });
+                localStorage.setItem('formData', JSON.stringify(formData));
+                // console.log(localStorage.getItem('formData'));
+                dispData();
+                document.querySelector('form').reset();
+                document.getElementById('fname').focus();
             }
-            localStorage.setItem('formData', JSON.stringify(formData));
-            // console.log(localStorage.getItem('formData'));
-            dispData();
+            else{
+                alert("Ooopppssss... Duplicate found!!!\nYou have already sigjned up");
+            }
             e.preventDefault();
         }
-
         function dispData(){
-            // console.log(localStorage.getItem('formData'));
-            let {fname, lname, email, pwd} = JSON.parse(localStorage.getItem('formData'));
-            var output = document.getElementById('output');
-            output.innerHTML = `
-            <table>
-                <tbody>
-                    <tr>
-                        <td>First Name</td>
-                        <td>${fname}</td>
-                    </tr>
-                    <tr>
-                        <td>Last Name</td>
-                        <td>${lname}</td>
-                    </tr>
-                    <tr>
-                        <td>Email Address</td>
-                        <td>${email}</td>
-                    </tr>
-                    <tr>
-                        <td>Password</td>
-                        <td>${pwd}</td>
-                    </tr>
-
-                </tbody>
-            </table>`;
+            console.log(localStorage.getItem('formData'));
+            if(localStorage.getItem('formData')){
+                var output = document.querySelector('tbody');
+                output.innerHTML = "";
+                JSON.parse(localStorage.getItem('formData')).forEach(data => {
+                    output.innerHTML += `
+                            <tr>
+                                <td>${data.fname}</td>
+                                <td>${data.lname}</td>
+                                <td>${data.email}</td>
+                                <td>${data.pwd}</td>
+                            </tr>
+                    `;
+                });                
+            }
         }
         dispData();
     </script>
