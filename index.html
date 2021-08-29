@@ -1,124 +1,63 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FORM DATA</title>
-    <style>
-        *{ box-sizing: border-box; }
-        html, body{ margin: 0; padding: 0; }
-        .container{
-            margin: 10px 50px;
-        }
-        .form-group{
-            margin: 10px;
-        }
-        input{
-            width: 100%;
-            border: solid 1px #eee;
-            padding: 15px 10px;
-        }
-        button{
-            width: 200px;
-            padding: 15px;
-            margin-left: 250px;
-            background: #fff;
-            color: dodgerblue;
-            border: solid 1px dodgerblue;
-            cursor: pointer;
-            transition:  all .38s ease-in-out;
-        }
-        button:hover{
-            background: dodgerblue;
-            color: #fff;
-        }
-        table tr td{
-            border: solid 1px #eee;
-            padding: 10px;
-        }
-    </style>
+    <title>Website Name | Home</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-    <div class="container">
-        <h2>SIGNUP FORM</h2>
-        <form role="form" onsubmit="signUp(event);">
-            <div class="form-group">
-                <input type="text" name="fname" id="fname" placeholder="First Name" required>
+    <header>
+        <div id="row">
+            <div id="brand">Website Name</div>
+            <div id="menu">
+                <ul>
+                    <li><a href="/" class="active">Home</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/signin.html">&#x26d4;</a></li>
+                </ul>
             </div>
-            <div class="form-group">
-                <input type="text" name="lname" id="lname" placeholder="Last Name" required>
-            </div>
-            <div class="form-group">
-                <input type="email" name="email" id="email" placeholder="Email Address" required>
-            </div>
-            <div class="form-group">
-                <input type="password" name="pwd" id="pwd" placeholder="Password" required>
-            </div>
-            <div class="form-group">
-                <button type="submit">Sign Up</button>
-            </div>
-        </form>
-
-        <h2>MY INFO</h2>
-        <div id="output">
-            <table>
-                <thead>
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email Address</th>
-                        <th>Password</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- DISPLAY USERS DATA -->
-                </tbody>
-            </table>
+            <div id="account"></div>
         </div>
-    </div>
+        <div id="jumbotron">
+            <h1>Jumbotron</h1>
+        </div>
+    </header>
 
-    <script type="text/javascript">
-        const signUp = e => {
-            let formData = JSON.parse(localStorage.getItem('formData')) || [];
-            let exist = formData.length && 
-            JSON.parse(localStorage.getItem('formData')).some(data => data.fname.toLowerCase() == document.getElementById('fname').value.toLowerCase() && data.lname.toLowerCase() == document.getElementById('lname').value.toLowerCase());
-            if(!exist){
-                formData.push({
-                    fname: document.getElementById('fname').value,
-                    lname: document.getElementById('lname').value,
-                    email: document.getElementById('email').value,
-                    pwd: document.getElementById('pwd').value
-                });
-                localStorage.setItem('formData', JSON.stringify(formData));
-                // console.log(localStorage.getItem('formData'));
-                dispData();
-                document.querySelector('form').reset();
-                document.getElementById('fname').focus();
-            }
-            else{
-                alert("Ooopppssss... Duplicate found!!!\nYou have already sigjned up");
-            }
-            e.preventDefault();
-        }
-        function dispData(){
-            console.log(localStorage.getItem('formData'));
-            if(localStorage.getItem('formData')){
-                var output = document.querySelector('tbody');
-                output.innerHTML = "";
-                JSON.parse(localStorage.getItem('formData')).forEach(data => {
-                    output.innerHTML += `
-                            <tr>
-                                <td>${data.fname}</td>
-                                <td>${data.lname}</td>
-                                <td>${data.email}</td>
-                                <td>${data.pwd}</td>
-                            </tr>
-                    `;
-                });                
-            }
-        }
-        dispData();
-    </script>
+    <main>        
+        <div id="products-sect">
+            <h3>Our Products</h3>
+            <div id="products">
+                <div class="card">
+                    Product A
+                </div>
+                <div class="card">
+                    Product B
+                </div>
+                <div class="card">
+                    Product C
+                </div>
+                <div class="card">
+                    Product D
+                </div>
+                <div class="card">
+                    Product E
+                </div>
+                <div class="card">
+                    Product F
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div>&copy;2021 | Website Name</div>
+        <div>All Rights Reserved</div>
+    </footer>
+
+    <script type="text/javascript" src="./script.js"></script>
 </body>
 </html>
